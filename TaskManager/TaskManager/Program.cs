@@ -8,8 +8,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Aici setez conexiunea la baza de date, folosind connection string-ul din appsettings.json
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
-
+    options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 // Aici configurez Identity pentru login/register
 // Setez sa nu ceara confirmare pe email, ca sa fie simplu la proiect
 builder.Services.AddDefaultIdentity<ApplicationUser>(options =>

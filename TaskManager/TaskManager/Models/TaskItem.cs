@@ -1,20 +1,10 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 
-
 namespace TaskManager.Models
 {
-    //public enum TaskStatus {
-    //    [Display(Name = "Not Started")]
-    //    NotStarted,
-    //    [Display(Name = "In Progress")]
-    //    InProgress,
-    //    [Display(Name = "Completed")]
-    //    Completed 
-    //}
-    //public enum MediaType { Text, Image, Video }
-
     public class TaskItem : IValidatableObject
     {
         public int Id { get; set; }
@@ -34,9 +24,11 @@ namespace TaskManager.Models
         public TaskStatus Status { get; set; } = TaskStatus.NotStarted;
 
         [Required(ErrorMessage = "This is a required field.")]
+        [Column(TypeName = "timestamp without time zone")]
         public DateTime StartDate { get; set; }
 
         [Required(ErrorMessage = "This is a required field.")]
+        [Column(TypeName = "timestamp without time zone")]
         public DateTime EndDate { get; set; }
 
         [Required]
@@ -45,6 +37,7 @@ namespace TaskManager.Models
         [Required, StringLength(4000)]
         public string MediaContent { get; set; } = default!;
 
+        [Column(TypeName = "timestamp without time zone")]
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 
         [BindNever, ValidateNever]
@@ -56,7 +49,6 @@ namespace TaskManager.Models
         public ICollection<Comment> Comments { get; set; } = new List<Comment>();
 
         public ICollection<TaskAssignment> Assignments { get; set; } = new List<TaskAssignment>();
-
 
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {

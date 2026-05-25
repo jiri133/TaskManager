@@ -84,7 +84,7 @@ namespace TaskManager.Services
                     ? 0
                     : (int)Math.Round((completed * 100.0) / total);
 
-                var now = DateTime.Now;
+                var now = DateTime.UtcNow;
 
                 var overdueCount = project.TaskItems.Count(t =>
                     t.EndDate < now && t.Status.ToString() != "Completed");

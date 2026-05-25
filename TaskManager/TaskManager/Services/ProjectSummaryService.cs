@@ -35,7 +35,7 @@ namespace TaskManager.Services
 
             // caut cel mai apropiat deadline din viitor
             var nextDeadline = tasks
-                .Where(t => t.EndDate >= DateTime.Now)
+                .Where(t => t.EndDate >= DateTime.UtcNow)
                 .OrderBy(t => t.EndDate)
                 .FirstOrDefault();
 

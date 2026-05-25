@@ -390,8 +390,7 @@ namespace TaskManager.Controllers
             if (!await CanModifyTasks(projectId))
                 return Forbid();
 
-            var today = DateTime.UtcNow.Date;
-
+            var today = DateTime.Today;
             var model = new TaskItemFormViewModel
             {
                 ProjectId = projectId,
@@ -413,9 +412,8 @@ namespace TaskManager.Controllers
 
             model.ProjectId = projectId;
 
-            model.StartDate = DateTime.SpecifyKind(model.StartDate.Date, DateTimeKind.Utc);
-            model.EndDate = DateTime.SpecifyKind(model.EndDate.Date, DateTimeKind.Utc);
-
+            model.StartDate = model.StartDate.Date;
+            model.EndDate = model.EndDate.Date;
             if (model.EndDate < model.StartDate)
                 ModelState.AddModelError(nameof(model.EndDate), "End date must be after or equal to start date.");
 

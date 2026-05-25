@@ -340,7 +340,7 @@ namespace TaskManager.Controllers
                 TaskId = model.TaskId,
                 UserId = model.SelectedUserId,
                 AssignedById = currentUserId,
-                AssignedAt = DateTime.UtcNow
+                AssignedAt = DateTime.SpecifyKind(DateTime.Now, DateTimeKind.Unspecified)
             };
 
             _db.TaskAssignments.Add(assignment);
@@ -439,7 +439,7 @@ namespace TaskManager.Controllers
                 MediaType = model.MediaType,
                 MediaContent = model.MediaContent ?? string.Empty,
                 CreatedById = _userManager.GetUserId(User)!,
-                CreatedAt = DateTime.UtcNow
+                CreatedAt = DateTime.SpecifyKind(DateTime.Now, DateTimeKind.Unspecified)
             };
 
             _db.TaskItems.Add(entity);
@@ -515,8 +515,8 @@ namespace TaskManager.Controllers
             if (task == null)
                 return NotFound();
 
-            model.StartDate = DateTime.SpecifyKind(model.StartDate.Date, DateTimeKind.Utc);
-            model.EndDate = DateTime.SpecifyKind(model.EndDate.Date, DateTimeKind.Utc);
+            model.StartDate = DateTime.SpecifyKind(model.StartDate.Date, DateTimeKind.Unspecified);
+            model.EndDate = DateTime.SpecifyKind(model.EndDate.Date, DateTimeKind.Unspecified);
 
             if (model.EndDate < model.StartDate)
                 ModelState.AddModelError(nameof(model.EndDate), "End date must be after or equal to start date.");
@@ -556,7 +556,7 @@ namespace TaskManager.Controllers
                     TaskId = id,
                     UserId = model.SelectedAssigneeId,
                     AssignedById = currentUserId,
-                    AssignedAt = DateTime.UtcNow
+                    AssignedAt = DateTime.Now
                 });
             }
 
